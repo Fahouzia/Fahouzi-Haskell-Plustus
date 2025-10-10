@@ -2,7 +2,7 @@ HC5T9 : Fonction d’ordre supérieur pour transformer une liste
 
 ---
 
-## 1️Comprendre le problème
+## 1️ Comprendre le problème
 
 On veut créer une fonction `transformList` qui :
 
@@ -10,12 +10,21 @@ On veut créer une fonction `transformList` qui :
 * Prend **une liste `xs`**.
 * Applique **deux fois** la fonction `f` à chaque élément de la liste.
 
-Exemple :
+CODE 
 
 ```haskell
-transformList (*2) [1,2,3]
--- Résultat : [4,8,12]  
--- (1*2*2, 2*2*2, 3*2*2)
+-- transformList : applique une fonction deux fois à chaque élément d'une liste
+transformList :: (a -> a) -> [a] -> [a]
+transformList f xs = map (f . f) xs
+-- map applique (f . f) = f(f(x)) sur chaque élément
+
+-- Fonction main pour tester
+main :: IO ()
+main = do
+    print (transformList (+1) [1,2,3])   -- Résultat : [3,4,5]
+    print (transformList (*2) [1,2,3])   -- Résultat : [4,8,12]
+    print (transformList (\x -> x-1) [5,6,7]) -- Résultat : [3,4,5]
+
 ```
 
 ---
@@ -126,14 +135,3 @@ transformList f xs = map (f . f) xs
 
 ---
 
-### Exemple d’utilisation :
-
-```haskell
--- Doubler deux fois chaque élément
-transformList (*2) [1,2,3,4]
--- Résultat : [4,8,12,16]
-
--- Ajouter 1 deux fois à chaque élément
-transformList (+1) [1,2,3]
--- Résultat : [3,4,5]
-```
