@@ -11,7 +11,7 @@
 
 ---
 
-##  Code complet (copiable)
+##  Code 
 
 ```haskell
 -- HC7T6 : Fonction circleCircumference avec Integral et Floating
