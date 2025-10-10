@@ -7,7 +7,7 @@ Créer une fonction `filterEven` qui prend une liste d’entiers et retourne **u
 
 ---
 
-##  Code complet (copiable)
+##  Code 
 
 ```haskell
 -- HC6T8 : Filtrer les nombres pairs
