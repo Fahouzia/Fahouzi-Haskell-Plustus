@@ -3,8 +3,18 @@ HC5T8 : Style point-free
 En style **point-free**, on supprime l’argument `x` et on utilise directement une fonction partielle :
 
 ```haskell
-addFive :: Num a => a -> a
-addFive = (+5)
+-- Version point-free de addFive
+addFive :: Int -> Int
+addFive = (+5)  -- pas besoin de mentionner x
+
+-- Fonction main pour tester
+main :: IO ()
+main = do
+    print (addFive 10)  -- Résultat : 15
+    print (addFive 0)   -- Résultat : 5
+    print (addFive (-3))-- Résultat : 2
+
+
 ```
 
 **Explication :**
