@@ -1,14 +1,52 @@
-En Haskell,
-l’opérateur `$` permet d’éviter les parenthèses en changeant la priorité d’évaluation. On peut donc réécrire la fonction comme ceci :
+### **HC5T7 – Utilisation de `$`**
+
+**Objectif :**
+
+* Réécrire `result = sum (map (*2) (filter (>3) [1..10]))` **en utilisant `$`** pour éviter les parenthèses imbriquées.
+
+**Code :**
 
 ```haskell
+-- Utilisation de $ pour simplifier les parenthèses
+result :: Int
 result = sum $ map (*2) $ filter (>3) [1..10]
+
+-- Fonction main pour tester
+main :: IO ()
+main = print result  -- Résultat : 92
 ```
 
-Explication :
+---
 
-* `filter (>3) [1..10]` sélectionne les nombres supérieurs à 3 → `[4,5,6,7,8,9,10]`
-* `map (*2)` double chaque élément → `[8,10,12,14,16,18,20]`
-* `sum` fait la somme de tous les éléments → `98`
+### **Explication  :**
 
-L’opérateur `$` évite les parenthèses imbriquées et rend l’expression plus lisible.
+1. **Sans `$` :**
+
+   ```haskell
+   sum (map (*2) (filter (>3) [1..10]))
+   ```
+
+   * Haskell commence par `filter (>3) [1..10]` → `[4,5,6,7,8,9,10]`
+   * Puis `map (*2)` → `[8,10,12,14,16,18,20]`
+   * Puis `sum` → `92`
+
+2. **Avec `$` :**
+
+   ```haskell
+   sum $ map (*2) $ filter (>3) [1..10]
+   ```
+
+   * L’opérateur `$` permet de **réduire les parenthèses**.
+   * `f $ x` est équivalent à `f x`, mais avec priorité plus faible → simplifie la lecture.
+   * Haskell lit :
+
+     1. `filter (>3) [1..10]`
+     2. `map (*2)` appliqué au résultat
+     3. `sum` appliqué au résultat final
+
+3. **Avantages :**
+
+   * Code plus **lisible** et **compact**
+   * Utile surtout pour des **chaînes de transformations de données**
+
+---
