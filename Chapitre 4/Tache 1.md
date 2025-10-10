@@ -1,19 +1,23 @@
  HC4T1 - Définir une fonction weatherReport avec un main
+ 
+
 
 ```haskell
-
+ -- Définition de la fonction weatherReport avec pattern matching
 weatherReport :: String -> String
-weatherReport condition = case condition of
-    "sunny"  -> "Il fait beau et ensoleillé !"
-    "rainy"  -> "N'oublie pas ton parapluie !"
-    "cloudy" -> "Un peu gris, mais pas de pluie pour l'instant !"
-    _        -> "Météo inconnue"
+weatherReport "sunny"  = "It's a bright and beautiful day!"
+weatherReport "rainy"  = "Don't forget your umbrella!"
+weatherReport "cloudy" = "A bit gloomy, but no rain yet!"
+weatherReport _        = "Weather unknown"  -- catch-all pour tout autre cas
 
+-- Fonction main pour tester
 main :: IO ()
 main = do
-    putStrLn "Entrez la condition météo (sunny, rainy, cloudy) :"
-    condition <- getLine
-    putStrLn (weatherReport condition)
+    putStrLn (weatherReport "sunny")    -- Cas "sunny"
+    putStrLn (weatherReport "rainy")    -- Cas "rainy"
+    putStrLn (weatherReport "cloudy")   -- Cas "cloudy"
+   
+
 ```
  Explication :
 
