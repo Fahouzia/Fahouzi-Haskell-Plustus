@@ -1,5 +1,20 @@
 HC9T8 : Définir un type récursif Sequence
 ---
+CODE 
+```haskell
+-- Définition d'un type récursif Sequence
+data Sequence a = EmptySeq                -- cas de base : séquence vide
+                | Node a (Sequence a)     -- cas récursif : un élément + le reste de la séquence
+                deriving Show
+
+-- Exemple d'utilisation
+main :: IO ()
+main = do
+    let seq1 = Node 10 (Node 20 (Node 30 EmptySeq))
+    putStrLn "Contenu de la séquence :"
+    print seq1
+
+```
 
 ### 1️⃣ Définition du type `Sequence`
 
