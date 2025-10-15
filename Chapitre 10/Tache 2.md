@@ -1,20 +1,25 @@
 HC10T2 : Classe de type Summable
 
 ```haskell
+-- HC10T2 : Classe Summable
+
 -- Définition de la classe Summable
 class Summable a where
     sumUp :: [a] -> a
 
--- Instance de Summable pour Int
+-- Implémentation pour Int
 instance Summable Int where
     sumUp []     = 0
     sumUp (x:xs) = x + sumUp xs
 
--- Fonction main pour tester sumUp
+-- Fonction principale pour tester
 main :: IO ()
 main = do
-    let numbers = [1, 2, 3, 4, 5]
-    putStrLn $ "La somme des nombres est : " ++ show (sumUp numbers)
+    let liste1 = [1,2,3,4,5]
+    let liste2 = [10,20,30]
+    putStrLn ("Somme de [1,2,3,4,5] : " ++ show (sumUp liste1))
+    putStrLn ("Somme de [10,20,30]   : " ++ show (sumUp liste2))
+
 ```
 
 ---
