@@ -1,36 +1,34 @@
 HC15T1 : Gérer les exceptions lors de la lecture d’un fichier et du calcul de la vitesse
 
 ```haskell
--- HC15T1.hs
+--- HC15T1.hs
 import System.IO
 import Control.Exception
 import Text.Read (readMaybe)
 
--- Fonction pour lire le contenu d'un fichier avec gestion des exceptions
+-- Lecture sécurisée d'un fichier
 readFileSafe :: FilePath -> IO (Either String String)
-readFileSafe path = try (readFile path) >>= \result ->
-    case result of
-        Left e  -> return $ Left ("Erreur lors de la lecture du fichier : " ++ show (e :: IOException))
-        Right content -> return $ Right content
+readFileSafe path = try (readFile path) >>= \case
+    Left e  -> return $ Left ("Erreur lors de la lecture du fichier : " ++ show (e :: IOException))
+    Right content -> return $ Right content
 
--- Fonction pour calculer la vitesse en gérant les erreurs de saisie
+-- Calcul sécurisé de la vitesse
 calculateSpeed :: IO ()
 calculateSpeed = do
     putStrLn "Entrez la distance parcourue en mètres :"
-    distanceInput <- getLine
+    distInput <- getLine
     putStrLn "Entrez le temps écoulé en secondes :"
     timeInput <- getLine
-    case (readMaybe distanceInput :: Maybe Double, readMaybe timeInput :: Maybe Double) of
-        (Just d, Just t) ->
-            if t == 0
-                then putStrLn "Erreur : Le temps ne peut pas être zéro."
-                else putStrLn $ "La vitesse est " ++ show (d / t) ++ " m/s."
-        _ -> putStrLn "Erreur : Veuillez entrer des nombres valides."
+    case (readMaybe distInput :: Maybe Double, readMaybe timeInput :: Maybe Double) of
+        (Just distance, Just time) ->
+            if time == 0
+                then putStrLn "Erreur : le temps ne peut pas être zéro."
+                else putStrLn $ "La vitesse est " ++ show (distance / time) ++ " m/s."
+        _ -> putStrLn "Erreur : veuillez entrer des nombres valides."
 
 -- Fonction principale
 main :: IO ()
 main = do
-    -- Lecture sécurisée du fichier
     putStrLn "Entrez le chemin du fichier à lire :"
     filePath <- getLine
     fileContent <- readFileSafe filePath
@@ -39,9 +37,8 @@ main = do
         Right content -> do
             putStrLn "Contenu du fichier :"
             putStrLn content
-
-            -- Calcul de la vitesse
             calculateSpeed
+
 ```
 
 ---
