@@ -1,4 +1,4 @@
-Voici l’exercice **HC16T10 : Fréquence des caractères d’une chaîne** entièrement expliqué 👇
+Voici l’exercice **HC16T10 : Fréquence des caractères d’une chaîne**
 
 ---
 
