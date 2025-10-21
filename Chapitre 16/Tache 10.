@@ -1,0 +1,89 @@
+Voici l’exercice **HC16T10 : Fréquence des caractères d’une chaîne** entièrement expliqué 👇
+
+---
+
+###  Objectif
+
+Créer une fonction qui prend une **chaîne de caractères** et retourne un **dictionnaire** (liste de paires) indiquant la **fréquence de chaque caractère**.
+
+Exemple :
+
+* `"hello"` → `[('h',1),('e',1),('l',2),('o',1)]`
+
+---
+
+###  Code 
+
+```haskell
+-- HC16T10 : Fréquence des caractères d'une chaîne
+
+import Data.List (nub)
+
+-- Fonction qui calcule la fréquence des caractères
+frequence :: String -> [(Char, Int)]
+frequence s = [(c, compter c s) | c <- nub s]
+
+-- Fonction qui compte le nombre d'occurrences d'un caractère
+compter :: Char -> String -> Int
+compter _ [] = 0
+compter c (x:xs)
+    | c == x    = 1 + compter c xs
+    | otherwise = compter c xs
+
+-- Programme principal pour tester
+main :: IO ()
+main = do
+    putStrLn "=== Fréquence des caractères ==="
+    putStrLn "Entrez une chaîne de caractères :"
+    input <- getLine
+    let freq = frequence input
+    putStrLn "Fréquence des caractères :"
+    mapM_ (\(c,n) -> putStrLn (show c ++ " : " ++ show n)) freq
+```
+
+---
+
+### 🔍 Explications pas à pas
+
+1. **`nub`**
+
+```haskell
+nub s
+```
+
+* Supprime les doublons dans la chaîne pour ne compter chaque caractère qu’une fois.
+
+2. **`compter`**
+
+* Parcourt la chaîne et compte combien de fois `c` apparaît.
+* Cas récursif : si le caractère correspond, on ajoute 1 ; sinon on continue.
+
+3. **`frequence`**
+
+```haskell
+frequence s = [(c, compter c s) | c <- nub s]
+```
+
+* Crée une liste de paires `(caractère, nombre d’occurrences)` pour chaque caractère unique.
+
+4. **Bloc `main`**
+
+* Lit une chaîne de caractères de l’utilisateur.
+* Calcule la fréquence avec `frequence`.
+* Affiche chaque caractère et sa fréquence.
+
+---
+
+### 🧩 Exemple d’exécution
+
+```
+=== Fréquence des caractères ===
+Entrez une chaîne de caractères :
+hello
+Fréquence des caractères :
+h : 1
+e : 1
+l : 2
+o : 1
+```
+
