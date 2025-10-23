@@ -4,31 +4,35 @@
 ##  Code
 
 ```haskell
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+
+module Main where
+
 -- Définition du type paramétrique Box
 data Box a = Empty | Has a deriving (Show, Eq)
 
--- Définition de la classe de type Container
-class Container c where
-    isEmpty  :: c a -> Bool        -- Vérifie si le conteneur est vide
-    contains :: (Eq a) => c a -> a -> Bool  -- Vérifie si le conteneur contient un élément donné
-    replace  :: c a -> a -> c a    -- Remplace la valeur contenue par une autre
+-- Classe multi-paramétrique : Container c a
+class Container c a where
+    isEmpty  :: c a -> Bool
+    contains :: c a -> a -> Bool
+    replace  :: c a -> a -> c a
 
--- Instance de Container pour Box
-instance Container Box where
+-- Instance de Container pour Box avec la contrainte Eq a
+instance Eq a => Container Box a where
     isEmpty Empty     = True
     isEmpty (Has _)   = False
 
     contains Empty _  = False
     contains (Has x) y = x == y
 
-    replace Empty newValue = Has newValue
-    replace (Has _) newValue = Has newValue
+    replace _ newValue = Has newValue
 
 -- Programme principal pour tester
 main :: IO ()
 main = do
-    let b1 = Empty
-    let b2 = Has 42
+    let b1 = Empty    :: Box Int
+    let b2 = Has 42   :: Box Int
     putStrLn "=== Test de Container pour Box ==="
     print b1
     print b2
@@ -42,8 +46,9 @@ main = do
     print (contains b2 99)   -- False
 
     putStrLn "\n3️⃣ Test de replace :"
-    print (replace b1 10)    -- Has 10
-    print (replace b2 99)    -- Has 99
+    print (replace b1 10 :: Box Int)    -- Has 10
+    print (replace b2 99 :: Box Int)    -- Has 99
+
 ```
 
 ---
