@@ -6,13 +6,13 @@
 
 ```haskell
 -- Définition de la classe WeAccept
-class WeAccept a where
+class (Show a) => WeAccept a where
     weAccept :: a -> Bool
     fancyFunction :: a -> String           -- fonction supplémentaire
     fancyFunction x =
         if weAccept x
-            then " Accepted: " ++ show x
-            else " Rejected: " ++ show x
+            then "Accepted: " ++ show x
+            else "Rejected: " ++ show x
 
 -- Type de paiement Cardano
 data Cardano = ADA deriving (Show)
@@ -50,7 +50,7 @@ main = do
     print (fancyFunction GBP)
     print (fancyFunction France)
     print (fancyFunction USA)
-```
+
 
 ---
 
