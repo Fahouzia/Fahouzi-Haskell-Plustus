@@ -6,7 +6,7 @@ HC11T10 : Fonction sortContainers
 
 ---
 
-## 🔹 Code complet (copiable)
+## 🔹 Code 
 
 ```haskell
 import Data.List (sort)
