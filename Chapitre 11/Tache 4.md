@@ -8,49 +8,52 @@ mais cette fois on l’applique à un **autre type de données** appelé `Presen
 ## Code
 
 ```haskell
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
+
+module Main where
+
 -- Définition du type Present
 data Present a = NoPresent | Wrap a deriving (Show, Eq)
 
--- Définition de la classe de type Container
-class Container c where
+-- Classe multi-paramétrique : Container c a
+class Container c a where
     isEmpty  :: c a -> Bool
-    contains :: (Eq a) => c a -> a -> Bool
+    contains :: c a -> a -> Bool
     replace  :: c a -> a -> c a
 
--- Instance de Container pour Present
-instance Container Present where
-    -- Vérifie si le cadeau est vide
-    isEmpty NoPresent   = True
-    isEmpty (Wrap _)    = False
+-- Instance de Container pour Present avec la contrainte Eq a
+instance Eq a => Container Present a where
+    isEmpty NoPresent  = True
+    isEmpty (Wrap _)   = False
 
-    -- Vérifie si le cadeau contient une certaine valeur
     contains NoPresent _ = False
     contains (Wrap x) y  = x == y
 
-    -- Remplace le contenu du cadeau (ou l’enveloppe s’il était vide)
-    replace NoPresent newVal = Wrap newVal
-    replace (Wrap _) newVal  = Wrap newVal
+    replace _ newVal = Wrap newVal
 
 -- Programme principal pour tester
 main :: IO ()
 main = do
-    let p1 = NoPresent
-    let p2 = Wrap "Livre"
+    let p1 = NoPresent            :: Present String
+    let p2 = Wrap "Livre"        :: Present String
+
     putStrLn "=== Test de Container pour Present ==="
     print p1
     print p2
 
     putStrLn "\n1️⃣ Test de isEmpty :"
-    print (isEmpty p1)  -- True
-    print (isEmpty p2)  -- False
+    print (isEmpty p1)   -- True
+    print (isEmpty p2)   -- False
 
     putStrLn "\n2️⃣ Test de contains :"
-    print (contains p2 "Livre")  -- True
-    print (contains p2 "Chaussures")  -- False
+    print (contains p2 "Livre")      -- True
+    print (contains p2 "Chaussures") -- False
 
     putStrLn "\n3️⃣ Test de replace :"
-    print (replace p1 "Peluche")   -- Wrap "Peluche"
-    print (replace p2 "Montre")    -- Wrap "Montre"
+    print (replace p1 "Peluche")     -- Wrap "Peluche"
+    print (replace p2 "Montre")      -- Wrap "Montre"
+
 ```
 
 ---
