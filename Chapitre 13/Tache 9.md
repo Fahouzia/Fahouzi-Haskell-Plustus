@@ -13,31 +13,29 @@ HC13T9 : Renommer un espace de noms de module
 ##  **Code **
 
 ```haskell
--- HC13T8 : Gestion des conflits de noms avec importations qualifiées
-
--- Importations qualifiées
-import qualified Data.Map as Map   -- Map est utilisé avec le préfixe Map
-import qualified Data.Set as Set   -- Set est utilisé avec le préfixe Set
+-- Import de Data.List avec alias L
+import qualified Data.List as L
+-- Import de System.Directory avec alias D
+import qualified System.Directory as D
 
 main :: IO ()
 main = do
-    putStrLn "=== HC13T8 : Importations qualifiées ==="
+    putStrLn "=== HC13T9 : Renaming Module Namespace ==="
 
-    -- Exemple avec Data.Map
-    let myMap = Map.fromList [("Alice", 25), ("Bob", 30)]
-    putStrLn "\nContenu de la Map :"
-    print myMap
+    -- Utilisation d'une fonction de Data.List (alias L)
+    let liste = [5, 2, 9, 1, 7]
+    putStrLn ("Liste originale : " ++ show liste)
+    putStrLn ("Liste triée avec L.sort : " ++ show (L.sort liste))
 
-    -- Recherche dans la Map
-    putStrLn ("Valeur associée à 'Alice' : " ++ show (Map.lookup "Alice" myMap))
+    -- Utilisation d'une fonction de System.Directory (alias D)
+    putStrLn "\nFichiers dans le répertoire courant :"
+    fichiers <- D.getDirectoryContents "."
+    putStrLn ("Tous les fichiers : " ++ show fichiers)
 
-    -- Exemple avec Data.Set
-    let mySet = Set.fromList [1,2,3,4,5]
-    putStrLn "\nContenu du Set :"
-    print mySet
+    -- Filtrage des fichiers contenant ".hs" avec L.filter
+    let fichiersHs = L.filter (L.isInfixOf ".hs") fichiers
+    putStrLn ("Fichiers Haskell (.hs) : " ++ show fichiersHs)
 
-    -- Vérification de présence dans le Set
-    putStrLn ("Le nombre 3 est-il dans le Set ? " ++ show (Set.member 3 mySet))
 ```
 
 ---
