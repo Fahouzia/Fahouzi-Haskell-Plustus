@@ -1,4 +1,4 @@
-Voici l’exercice **HC17T5 : Fonction `combineLists`** entièrement expliqué 👇
+ **HC17T5 : Fonction `combineLists`**
 
 ---
 
